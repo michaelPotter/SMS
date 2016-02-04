@@ -30,6 +30,17 @@ public class SMS {
 	private String seen;
 	private String priority;
 
+	public static final String[] PROJECTION = {
+			"body",
+			"_id",
+			"thread_id",
+			"address",
+			"date",
+			"person",
+			"phone_id",
+			"read"
+	};
+
 	public SMS() {
 
 	}

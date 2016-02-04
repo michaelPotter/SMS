@@ -45,7 +45,7 @@ public class MessageActivity extends AppCompatActivity {
 
 	public List<SMS> resolveMessages() {
 		Uri uri = Uri.parse("content://sms");
-		Cursor c = getContentResolver().query(uri, null, null, null, null);
+		Cursor c = getContentResolver().query(uri, SMS.PROJECTION, null, null, null);
 
 		List<SMS> list = new ArrayList<>();
 
