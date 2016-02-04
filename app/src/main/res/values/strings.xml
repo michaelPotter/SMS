@@ -1,0 +1,5 @@
+<resources>
+	<string name="app_name">SMS</string>
+	<string name="title_activity_main">MainActivity</string>
+	<string name="title_activity_thread_read">ThreadReadActivity</string>
+</resources>
