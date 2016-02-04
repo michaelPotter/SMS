@@ -74,15 +74,15 @@ public class SMS {
 	public Date getDateObject() {return new Date(Long.parseLong(this.date));}
 
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Body: " + body + "\n");
-		builder.append("id: " + id + "\n");
-		builder.append("Threadid: " + threadId + "\n");
-		builder.append("address: " + address + "\n");
-		builder.append("person: " + person + "\n");
-		builder.append("date: " + getDateObject() + "\n");
-		builder.append("phone_id: " + phone_id + "\n");
-		builder.append("\n");
-		return builder.toString();
+		String output = "";
+		output += "Body: " + body + "\n";
+		output += "id: " + id + "\n";
+		output += "Threadid: " + threadId + "\n";
+		output += "address: " + address + "\n";
+		output += "person: " + person + "\n";
+		output += "date: " + getDateObject() + "\n";
+		output += "phone_id: " + phone_id + "\n";
+		output += "\n";
+		return output;
 	}
 }

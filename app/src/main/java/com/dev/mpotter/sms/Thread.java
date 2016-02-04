@@ -34,14 +34,14 @@ public class Thread {
 	public Date getDateObject() {return new Date(Long.parseLong(date));}
 
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		String output = "";
 
-		builder.append("address: " + this.address + "\n");
-		builder.append("read: " + this.read + "\n");
-		builder.append("date: " + getDateObject() + "\n");
-		builder.append("body: " + this.body + "\n");
-		builder.append("threadId: " + this.threadId + "\n");
+		output += "address: " + this.address + "\n";
+		output += "read: " + this.read + "\n";
+		output += "date: " + getDateObject() + "\n";
+		output += "body: " + this.body + "\n";
+		output += "threadId: " + this.threadId + "\n";
 
-		return builder.toString();
+		return output;
 	}
 }
