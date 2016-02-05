@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageActivity extends AppCompatActivity {
+	private String mThreadId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +34,9 @@ public class MessageActivity extends AppCompatActivity {
 		});
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+		mThreadId = getIntent().getStringExtra("thread_id");
 
-
-		List<SMS> smsList = resolveMessages();
+		List<SMS> smsList = resolveMessages(mThreadId);
 		ArrayAdapter<SMS> adapter =
 				new ArrayAdapter<SMS>(this, android.R.layout.simple_list_item_1, smsList);
 
@@ -43,9 +44,9 @@ public class MessageActivity extends AppCompatActivity {
 		listView.setAdapter(adapter);
 	}
 
-	public List<SMS> resolveMessages() {
+	public List<SMS> resolveMessages(String threadId) {
 		Uri uri = Uri.parse("content://sms");
-		Cursor c = getContentResolver().query(uri, SMS.PROJECTION, null, null, null);
+		Cursor c = getContentResolver().query(uri, SMS.PROJECTION, "thread_id = " + threadId, null, null);
 
 		List<SMS> list = new ArrayList<>();
 

@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intent intent = new Intent(this, MessageActivity.class);
+		ListView list = (ListView) parent;
+		Thread thread = (Thread) list.getItemAtPosition(position);
+		intent.putExtra("thread_id", thread.getThreadId());
 		startActivity(intent);
 	}
 

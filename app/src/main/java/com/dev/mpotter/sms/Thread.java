@@ -32,6 +32,7 @@ public class Thread {
 	}
 
 	public Date getDateObject() {return new Date(Long.parseLong(date));}
+	public String getThreadId() {return this.threadId;}
 
 	public String toString() {
 		String output = "";
