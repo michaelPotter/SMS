@@ -3,8 +3,9 @@
     package="com.dev.mpotter.sms" >
 
     <uses-permission android:name="android.permission.READ_SMS" />
-
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission-sdk-23 android:name="android.permission.READ_SMS" />
+    <uses-permission-sdk-23 android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
