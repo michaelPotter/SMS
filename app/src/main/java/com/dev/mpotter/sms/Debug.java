@@ -1,9 +1,12 @@
 package com.dev.mpotter.sms;
 
-import android.app.Application;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,9 +16,29 @@ import java.util.List;
  * Created by michael on 2/4/16.
  */
 public class Debug extends AppCompatActivity {
-	public List<Thread> testThreads() {
+	private static final String phoneNumber = "4253508932";
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_debug);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
 		Uri uri = Uri.parse("content://mms-sms/conversations");
-		Cursor c = getContentResolver().query(uri, null, null, null, null);
+		Cursor conversationCursor = getContentResolver().query(uri, null, null, null, null);
+
+		Uri contactsUri = ContactsContract.Contacts.CONTENT_URI;
+		Cursor contactsCursor = getContentResolver().query(contactsUri, null, null, null, null);
+
+		Uri lookupUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+				Uri.encode(phoneNumber));
+		Cursor phoneNumCursor = getContentResolver().query(lookupUri, null, null, null, null);
+
+		printTable(phoneNumCursor);
+	}
+
+	public List<Thread> printTable(Cursor c) {
 
 		List<Thread> list = new ArrayList<>();
 		TextView t = (TextView) findViewById(R.id.text_view);

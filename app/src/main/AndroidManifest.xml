@@ -32,6 +32,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dev.mpotter.sms.MainActivity" />
         </activity>
+        <activity android:name=".Debug"
+            android:label="Debug"
+			android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
