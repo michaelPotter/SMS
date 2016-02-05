@@ -42,7 +42,7 @@ public class MessageActivity extends AppCompatActivity {
 
 		ListView listView = (ListView) findViewById(R.id.thread_list_view);
 		listView.setAdapter(adapter);
-		getSupportActionBar().setTitle(smsList.get(0).getNumber());
+		getSupportActionBar().setTitle(getIntent().getStringExtra("name"));
 	}
 
 	public List<SMS> resolveMessages(String threadId) {
@@ -53,7 +53,7 @@ public class MessageActivity extends AppCompatActivity {
 
 		if (c.moveToFirst()) {
 			for (int i = 0; i < c.getCount(); i++) {
-				list.add(new SMS(c));
+				list.add(new SMS(this, c));
 				c.moveToNext();
 			}
 		}

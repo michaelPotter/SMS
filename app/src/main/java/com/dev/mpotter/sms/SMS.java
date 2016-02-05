@@ -1,5 +1,6 @@
 package com.dev.mpotter.sms;
 
+import android.content.Context;
 import android.database.Cursor;
 
 import java.util.Date;
@@ -29,6 +30,8 @@ public class SMS {
 	private String creator;
 	private String seen;
 	private String priority;
+	private String to;
+	private String from;
 
 	public static final String[] PROJECTION = {
 			"body",
@@ -45,7 +48,7 @@ public class SMS {
 
 	}
 
-	public SMS(Cursor c) {
+	public SMS(Context context, Cursor c) {
 		this.body = c.getString(c.getColumnIndexOrThrow("body"));
 		this.id = c.getString(c.getColumnIndexOrThrow("_id"));
 		this.threadId = c.getString(c.getColumnIndexOrThrow("thread_id"));
@@ -53,6 +56,16 @@ public class SMS {
 		this.person = c.getString(c.getColumnIndexOrThrow("person"));
 		this.date = c.getString(c.getColumnIndexOrThrow("date"));
 		this.phone_id = c.getString(c.getColumnIndexOrThrow("phone_id"));
+
+		String name = Contact.getNameFromPhoneNumber(context, this.address);
+
+		if (person == null) {
+			this.to = name;
+			this.from = "you";
+		} else {
+			this.to = "you";
+			this.from = name;
+		}
 	}
 
 	public void setId(String id) {this.id = id;}
@@ -75,14 +88,9 @@ public class SMS {
 
 	public String toString() {
 		String output = "";
+		output += from + "\n";
 		output += "Body: " + body + "\n";
-		output += "id: " + id + "\n";
-		output += "Threadid: " + threadId + "\n";
-		output += "address: " + address + "\n";
-		output += "person: " + person + "\n";
-		output += "date: " + getDateObject() + "\n";
-		output += "phone_id: " + phone_id + "\n";
-		output += "\n";
+		output += "date: " + getDateObject();
 		return output;
 	}
 }

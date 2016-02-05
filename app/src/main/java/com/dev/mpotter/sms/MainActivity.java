@@ -8,6 +8,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbar.inflateMenu(R.menu.menu_main);
 		setSupportActionBar(toolbar);
 
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -53,11 +57,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 		if (c.moveToFirst()) {
 			for (int i = 0; i < c.getCount(); i++) {
-				list.add(new Thread(c));
+				list.add(new Thread(this, c));
 				c.moveToNext();
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.debug_menu_item:
+				startActivity(new Intent(this, Debug.class));
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		ListView list = (ListView) parent;
 		Thread thread = (Thread) list.getItemAtPosition(position);
 		intent.putExtra("thread_id", thread.getThreadId());
+		intent.putExtra("name", thread.getName());
 		startActivity(intent);
 	}
 
