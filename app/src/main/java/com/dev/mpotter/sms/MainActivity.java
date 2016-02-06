@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		ListView list = (ListView) parent;
 		Thread thread = (Thread) list.getItemAtPosition(position);
 		intent.putExtra("thread_id", thread.getThreadId());
+		intent.putExtra("number", thread.getAddress());
 		intent.putExtra("name", thread.getName());
 		startActivity(intent);
 	}

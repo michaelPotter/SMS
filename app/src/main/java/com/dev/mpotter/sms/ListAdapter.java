@@ -43,7 +43,7 @@ public class ListAdapter extends ArrayAdapter<SMS> {
 		senderText.setText(getItem(position).getSender());
 		messageText.setText(getItem(position).getBody());
 
-		if(getItem(position).getSender().equals("you")) {
+		if(getItem(position).isOutgoing()) {
 			senderText.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
 			messageText.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
 		}

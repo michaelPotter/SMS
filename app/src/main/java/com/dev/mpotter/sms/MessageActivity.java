@@ -42,7 +42,11 @@ public class MessageActivity extends AppCompatActivity {
 				new ListAdapter(this, smsList);
 		ListView listView = (ListView) findViewById(R.id.thread_list_view);
 		listView.setAdapter(adapter);
-		getSupportActionBar().setTitle(getIntent().getStringExtra("name"));
+		if (getIntent().getStringExtra("name") != null) {
+			getSupportActionBar().setTitle(getIntent().getStringExtra("name"));
+		} else {
+			getSupportActionBar().setTitle(getIntent().getStringExtra("number"));
+		}
 	}
 
 	public List<SMS> resolveMessages(String threadId) {

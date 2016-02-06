@@ -32,7 +32,7 @@ public class SMS {
 	private String priority;
 	private String to;
 	private String from;
-	private boolean outgoing;
+	private boolean isOutgoing;
 
 	public static final int RECEIVED = 1;
 	public static final int SENT = 0;
@@ -65,11 +65,11 @@ public class SMS {
 		if (sentOrReceived == SENT) {
 			this.to = name;
 			this.from = "you";
-			this.outgoing = true;
+			this.isOutgoing = true;
 		} else {
 			this.to = "you";
 			this.from = name;
-			this.outgoing = false;
+			this.isOutgoing = false;
 		}
 	}
 
@@ -92,6 +92,7 @@ public class SMS {
 	public Date getDateObject() {return new Date(Long.parseLong(this.date));}
 
 	public String getSender() {return this.from;}
+	public boolean isOutgoing() {return isOutgoing;}
 
 	public String toString() {
 		String output = "";
