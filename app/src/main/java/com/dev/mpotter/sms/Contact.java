@@ -19,10 +19,14 @@ public class Contact {
 				Uri.encode(address));
 		Cursor c = context.getContentResolver().query(lookupUri, CONTACT_NAME_PROJECTION, null, null, null);
 		c.moveToFirst();
-		if (c.getCount() > 0)
-			return c.getString(c.getColumnIndex("display_name"));
-		else
+		if (c.getCount() > 0) {
+			String name = c.getString(c.getColumnIndex("display_name"));
+			c.close();
+			return name;
+		} else {
+			c.close();
 			return null;
+		}
 	}
 
 }
