@@ -36,12 +36,22 @@ public class ListAdapter extends ArrayAdapter<SMS> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		View rowView = inflater.inflate(R.layout.activity_main, parent, false);
+		View view = inflater.inflate(R.layout.message_list_item, parent, false);
+		TextView senderText = (TextView) view.findViewById(R.id.sender);
+		TextView messageText = (TextView) view.findViewById(R.id.message);
+
+		senderText.setText(getItem(position).getSender());
+		messageText.setText(getItem(position).getBody());
+
+		if(getItem(position).getSender().equals("you")) {
+			senderText.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+			messageText.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+		}
 
 //		TextView senderNumber = (TextView) rowView.findViewById(R.id.smsNumberText);
 //		senderNumber.setText(smsList.get(position).getNumber());
 
-		return rowView;
+		return view;
 	}
 
 }

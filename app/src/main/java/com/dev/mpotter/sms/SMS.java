@@ -86,6 +86,8 @@ public class SMS {
 
 	public Date getDateObject() {return new Date(Long.parseLong(this.date));}
 
+	public String getSender() {return this.from;}
+
 	public String toString() {
 		String output = "";
 		output += from + "\n";

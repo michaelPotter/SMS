@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 	public List<Thread> resolveThreads() {
 		Uri uri = Uri.parse("content://mms-sms/conversations");
-		Cursor c = getContentResolver().query(uri, Thread.PROJECTION, null, null, null);
+		Cursor c = getContentResolver().query(uri, Thread.PROJECTION, null, null, "date desc");
 
 		List <Thread> list = new ArrayList<>();
 

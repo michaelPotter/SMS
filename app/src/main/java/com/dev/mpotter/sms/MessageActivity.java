@@ -38,8 +38,8 @@ public class MessageActivity extends AppCompatActivity {
 
 		List<SMS> smsList = resolveMessages(mThreadId);
 		ArrayAdapter<SMS> adapter =
-				new ArrayAdapter<SMS>(this, android.R.layout.simple_list_item_1, smsList);
-
+//				new ArrayAdapter<SMS>(this, android.R.layout.simple_list_item_1, smsList);
+				new ListAdapter(this, smsList);
 		ListView listView = (ListView) findViewById(R.id.thread_list_view);
 		listView.setAdapter(adapter);
 		getSupportActionBar().setTitle(getIntent().getStringExtra("name"));
