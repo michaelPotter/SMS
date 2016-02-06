@@ -32,7 +32,10 @@ public class SMS {
 	private String priority;
 	private String to;
 	private String from;
+	private boolean outgoing;
 
+	public static final int RECEIVED = 1;
+	public static final int SENT = 0;
 	public static final String[] PROJECTION = {
 			"body",
 			"_id",
@@ -48,7 +51,7 @@ public class SMS {
 
 	}
 
-	public SMS(Context context, Cursor c) {
+	public SMS(Context context, Cursor c, int sentOrReceived) {
 		this.body = c.getString(c.getColumnIndexOrThrow("body"));
 		this.id = c.getString(c.getColumnIndexOrThrow("_id"));
 		this.threadId = c.getString(c.getColumnIndexOrThrow("thread_id"));
@@ -59,12 +62,14 @@ public class SMS {
 
 		String name = Contact.getNameFromPhoneNumber(context, this.address);
 
-		if (person == null) {
+		if (sentOrReceived == SENT) {
 			this.to = name;
 			this.from = "you";
+			this.outgoing = true;
 		} else {
 			this.to = "you";
 			this.from = name;
+			this.outgoing = false;
 		}
 	}
 

@@ -46,15 +46,32 @@ public class MessageActivity extends AppCompatActivity {
 	}
 
 	public List<SMS> resolveMessages(String threadId) {
-		Uri uri = Uri.parse("content://sms");
-		Cursor c = getContentResolver().query(uri, SMS.PROJECTION, "thread_id = " + threadId, null, "date");
+		Uri uri = Uri.parse("content://sms/inbox");
+		Cursor inboxCursor = getContentResolver().query(uri, SMS.PROJECTION, "thread_id = " + threadId, null, "date");
 
+		Uri sentUri = Uri.parse("content://sms/sent");
+		Cursor sentCursor = getContentResolver().query(sentUri, SMS.PROJECTION, "thread_id = " + threadId, null, "date");
 		List<SMS> list = new ArrayList<>();
 
-		if (c.moveToFirst()) {
-			for (int i = 0; i < c.getCount(); i++) {
-				list.add(new SMS(this, c));
-				c.moveToNext();
+		if (inboxCursor.moveToFirst() && sentCursor.moveToFirst()) {
+			while (!inboxCursor.isAfterLast() && !sentCursor.isAfterLast()) {
+				SMS sent = new SMS(this, sentCursor, SMS.SENT);
+				SMS received = new SMS(this, inboxCursor, SMS.RECEIVED);
+				if (Long.parseLong(sent.getDate()) < Long.parseLong(received.getDate())) {
+					list.add(sent);
+					sentCursor.moveToNext();
+				} else {
+					list.add(received);
+					inboxCursor.moveToNext();
+				}
+			}
+			while (!inboxCursor.isAfterLast()) {
+				list.add(new SMS(this, inboxCursor, SMS.RECEIVED));
+				inboxCursor.moveToNext();
+			}
+			while (!sentCursor.isAfterLast()) {
+				list.add(new SMS(this, sentCursor, SMS.SENT));
+				sentCursor.moveToNext();
 			}
 		}
 		return list;
