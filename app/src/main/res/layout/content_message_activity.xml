@@ -11,6 +11,9 @@
 
 	<ListView
 		android:id="@+id/thread_list_view"
+		android:fastScrollEnabled="true"
+		android:stackFromBottom="true"
+		android:transcriptMode="normal"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"/>
 
