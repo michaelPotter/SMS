@@ -11,7 +11,7 @@ import java.util.Date;
 public class SMS {
 	private String id;
 	private String threadId;
-	private String address;
+	private String address; // phone number
 	private String person;
 	private String date;
 	private String dateSent;
@@ -43,7 +43,7 @@ public class SMS {
 			"address",
 			"date",
 			"person",
-			"phone_id",
+	//		"phone_id",
 			"read"
 	};
 
@@ -51,6 +51,12 @@ public class SMS {
 
 	}
 
+	/**
+	 *
+	 * @param context
+	 * @param c
+	 * @param sentOrReceived
+	 */
 	public SMS(Context context, Cursor c, int sentOrReceived) {
 		this.body = c.getString(c.getColumnIndexOrThrow("body"));
 		this.id = c.getString(c.getColumnIndexOrThrow("_id"));
@@ -58,7 +64,7 @@ public class SMS {
 		this.address = c.getString(c.getColumnIndexOrThrow("address"));
 		this.person = c.getString(c.getColumnIndexOrThrow("person"));
 		this.date = c.getString(c.getColumnIndexOrThrow("date"));
-		this.phone_id = c.getString(c.getColumnIndexOrThrow("phone_id"));
+//		this.phone_id = c.getString(c.getColumnIndexOrThrow("phone_id"));
 
 		String name = Contact.getNameFromPhoneNumber(context, this.address);
 

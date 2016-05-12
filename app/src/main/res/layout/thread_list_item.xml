@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:paddingLeft="@dimen/activity_horizontal_margin"
+			  android:paddingRight="@dimen/activity_horizontal_margin"
 			  android:orientation="vertical"
+			  android:minHeight="@dimen/minimum_item_height"
+			  android:gravity="center_vertical"
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent">
 
+	<!--android:textStyle="bold"-->
+
+	<!--<View-->
+		<!--android:layout_width="40dp"-->
+		<!--android:layout_height="40dp"-->
+		<!--android:src="@drawable/avatarcircle" />-->
+	<ImageView
+		android:id="@+id/avatar_icon"
+		android:layout_width="56dp"
+		android:layout_height="40dp"
+		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:src="@mipmap/ic_launcher"/>
+
 	<TextView
-		android:id="@+id/text_view"
+		android:id="@+id/name"
+		android:textSize="16dp"
+		android:textColor="@android:color/black"
+		android:layout_toRightOf="@id/avatar_icon"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"/>
 
-</LinearLayout>
+	<TextView
+		android:id="@+id/body"
+		android:layout_toRightOf="@id/avatar_icon"
+		android:layout_below="@id/name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
+
+</RelativeLayout>

@@ -9,12 +9,23 @@
 	tools:showIn="@layout/activity_thread_read"
 	tools:context="com.dev.mpotter.sms.MessageActivity">
 
+	<EditText
+		android:id="@+id/message_box"
+		android:layout_alignParentBottom="true"
+		android:gravity="bottom"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+
 	<ListView
 		android:id="@+id/thread_list_view"
+		android:dividerHeight="0dp"
+		android:divider="@null"
 		android:fastScrollEnabled="true"
 		android:stackFromBottom="true"
 		android:transcriptMode="normal"
+		android:layout_above="@id/message_box"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"/>
+
 
 </RelativeLayout>

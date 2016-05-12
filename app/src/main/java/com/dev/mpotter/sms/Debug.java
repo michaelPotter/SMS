@@ -16,7 +16,7 @@ import java.util.List;
  * Created by michael on 2/4/16.
  */
 public class Debug extends AppCompatActivity {
-	private static final String phoneNumber = "4253508932";
+	private static final String phoneNumber = "4253508358";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class Debug extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 
 		Uri uri = Uri.parse("content://mms-sms/conversations");
+//		Uri uri = Uri.parse("content://sms/inbox");
 		Cursor conversationCursor = getContentResolver().query(uri, null, null, null, null);
 
 		Uri contactsUri = ContactsContract.Contacts.CONTENT_URI;

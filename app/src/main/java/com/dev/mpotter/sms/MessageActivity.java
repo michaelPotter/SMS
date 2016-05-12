@@ -1,5 +1,8 @@
 package com.dev.mpotter.sms;
 
+import android.content.AsyncQueryHandler;
+import android.content.ContentResolver;
+import android.content.CursorLoader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,15 +10,23 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
+import java.lang.*;
+import java.lang.Thread;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity showing all messages in a conversation with a single person
+ */
 public class MessageActivity extends AppCompatActivity {
 	private String mThreadId;
+	private String number;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +39,19 @@ public class MessageActivity extends AppCompatActivity {
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-						.setAction("Action", null).show();
+				EditText messageBox = (EditText) findViewById(R.id.message_box);
+				String message = messageBox.getText().toString();
+				sendMessage(message);
+				messageBox.setText("");
 			}
 		});
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mThreadId = getIntent().getStringExtra("thread_id");
 
-		List<SMS> smsList = resolveMessages(mThreadId);
+		MessageResolver messageResolver = new MessageResolver(this, mThreadId);
+		List<SMS> smsList = messageResolver.resolveMessages(20);
+		this.number = smsList.get(0).getNumber();
 		ArrayAdapter<SMS> adapter =
 //				new ArrayAdapter<SMS>(this, android.R.layout.simple_list_item_1, smsList);
 				new ListAdapter(this, smsList);
@@ -49,37 +64,8 @@ public class MessageActivity extends AppCompatActivity {
 		}
 	}
 
-	public List<SMS> resolveMessages(String threadId) {
-		Uri uri = Uri.parse("content://sms/inbox");
-		Cursor inboxCursor = getContentResolver().query(uri, SMS.PROJECTION, "thread_id = " + threadId, null, "date");
-
-		Uri sentUri = Uri.parse("content://sms/sent");
-		Cursor sentCursor = getContentResolver().query(sentUri, SMS.PROJECTION, "thread_id = " + threadId, null, "date");
-		List<SMS> list = new ArrayList<>();
-
-		if (inboxCursor.moveToFirst() && sentCursor.moveToFirst()) {
-			while (!inboxCursor.isAfterLast() && !sentCursor.isAfterLast()) {
-				SMS sent = new SMS(this, sentCursor, SMS.SENT);
-				SMS received = new SMS(this, inboxCursor, SMS.RECEIVED);
-				if (Long.parseLong(sent.getDate()) < Long.parseLong(received.getDate())) {
-					list.add(sent);
-					sentCursor.moveToNext();
-				} else {
-					list.add(received);
-					inboxCursor.moveToNext();
-				}
-			}
-			while (!inboxCursor.isAfterLast()) {
-				list.add(new SMS(this, inboxCursor, SMS.RECEIVED));
-				inboxCursor.moveToNext();
-			}
-			while (!sentCursor.isAfterLast()) {
-				list.add(new SMS(this, sentCursor, SMS.SENT));
-				sentCursor.moveToNext();
-			}
-		}
-		return list;
+	private void sendMessage(String message) {
+		SmsManager smsManager = SmsManager.getDefault();
+		smsManager.sendTextMessage(number, null, message, null, null);
 	}
-
-
 }
